@@ -70,4 +70,17 @@ public class PostTest {
         Post myPost = new Post("Day1: Intro");
         assertEquals(1, myPost.getId());
     }
+
+    @Test
+    public void findReturnsCorrectPost() throws Exception {
+        Post post = setupNewPost();
+        assertEquals(1, Post.findById(post.getId()).getId());
+    }
+
+    @Test
+    public void findReturnsCorrectPostWhenMoreThanOnePostExists() throws Exception {
+        Post post = setupNewPost();
+        Post otherPost = new Post("How to pair successfully");
+        assertEquals(2, Post.findById(otherPost.getId()).getId());
+    }
 }
