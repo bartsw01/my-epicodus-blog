@@ -37,8 +37,22 @@ public class App {
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
-        //get: show an individual post
+        get("/posts", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            ArrayList<Post> posts = Post.getAll();
+            model.put("posts", posts);
 
+            return new ModelAndView(model, "index.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //get: show an individual post
+        get("/posts/:id", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idOfPostToFind = Integer.parseInt(req.params("id")); //pull id - must match route segment
+            Post foundPost = Post.findById(idOfPostToFind); //use it to find post
+            model.put("post", foundPost); //add it to model for templae to display
+            return new ModelAndView(model, "post-detail.hbs");
+        }, new HandlebarsTemplateEngine());
         //get: show a form to update a post
 
         //post: process a form to update a post
